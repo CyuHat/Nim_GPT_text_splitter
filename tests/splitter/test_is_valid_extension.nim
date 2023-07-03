@@ -1,5 +1,5 @@
 import os
-import .. / text_splitter
+import .. / .. / text_splitter
 
 discard """
   output: "true\nfalse"

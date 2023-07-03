@@ -1,9 +1,9 @@
 import os
-import .. / text_splitter
+import .. / .. / text_splitter
 
 discard """
-  output: "false\ntrue"
 """
+  # output: "false\ntrue"
 
 proc initializePlayground() =
   os.copyFile("tests/deps/fichier.txt", "fichier.txt")
@@ -17,10 +17,10 @@ proc clearPlayground() =
 
 # initializePlayground()
 
-# assert fileEmpty("file.txt") == false
-# assert fileEmpty("empty_file.txt") == true
+doAssert fileEmpty("file.txt") == false
+doAssert fileEmpty("empty_file.txt") == true
 
-echo fileEmpty("file.txt")
-echo fileEmpty("empty_file.txt")
+# echo fileEmpty("file.txt")
+# echo fileEmpty("empty_file.txt")
 
 # clearPlayground()
