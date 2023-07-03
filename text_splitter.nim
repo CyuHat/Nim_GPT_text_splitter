@@ -1,4 +1,4 @@
-import os, strutils
+import os, strutils, system
 
 # Creating a function for text splitting
 proc splitText(text: string, maxLength: int): seq[string] =
@@ -56,5 +56,11 @@ Then you will respond "Thank you TEXT memorized" and you will memorize the previ
   else:
     echo "Error: File not found."
 
+# Code to implement
+
+proc isValidExtension*(file_name: string): bool = false
+proc fileEmpty*(file_name: string): bool = false
+
 # Run the whole code
-main()
+if isMainModule:
+  main()

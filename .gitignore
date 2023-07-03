@@ -1,8 +1,11 @@
 nimcache/
 nimblecache/
 htmldocs/
+testresults
 input.txt
 output.txt
 test.nim
 test.exe
 text_splitter.exe
+tests/test_file_empty
+tests/test_is_valid_extension
