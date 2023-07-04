@@ -1,7 +1,7 @@
 import os, strutils, system
 
 # Creating a function for text splitting
-proc splitText(text: string, maxLength: int): seq[string] =
+proc splitText*(text: string, maxLength: int): seq[string] =
   var chunks: seq[string] = @[]
   var words = text.split(" ")
   var currentChunk = ""
@@ -58,8 +58,14 @@ Then you will respond "Thank you TEXT memorized" and you will memorize the previ
 
 # Code to implement
 
+# should take a file name and say if it's file extension is correct (in this case ".txt" is correct) 
 proc isValidExtension*(file_name: string): bool = false
+
+# should take a file name and check if this file is empty or not
 proc fileEmpty*(file_name: string): bool = false
+
+# should remove the first element (in the left) of the text sequence and send it to the clipboard returning the rest
+proc copy*(text_sequence: seq[string]): seq[string] = @[]
 
 # Run the whole code
 if isMainModule:

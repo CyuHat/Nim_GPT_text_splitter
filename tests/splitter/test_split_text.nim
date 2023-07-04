@@ -1,9 +1,6 @@
 import os
 import .. / .. / src / text_splitter
 
-discard """
-"""
-
 proc initializePlayground() =
   os.copyFile("tests/splitter/src/fichier.txt", "fichier.txt")
   os.copyFile("tests/splitter/src/hello_world.txt", "hello_world.txt")
@@ -16,7 +13,13 @@ proc clearPlayground() =
 
 initializePlayground()
 
-doAssert isValidExtension("file.txt") == true
-doAssert isValidExtension("not_valid_extension.mp3") == false
+let
+  res1 = (splitText("Hello wolrd", 5) == @["Hello", " wolr", "d"])
+  res2 = (splitText("", 5) == @[])
+  res3 = (splitText("Hello world", 0) == @[])
+
+doAssert res1
+doAssert res2
+doAssert res3
 
 clearPlayground()
