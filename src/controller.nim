@@ -3,11 +3,13 @@ import view
 import system
 import text_splitter
 
+# Type (class)
 type Controller = ref object
   model: Model
   view: View
   running: bool
 
+# related functions (Methods)
 proc newController*(): Controller =
   Controller(model: model.newModel(), view: view.newView(), running: true)
 
@@ -25,6 +27,7 @@ proc startShell*(controller: Controller) =
       quit(QuitSuccess)
     else:
       controller.evalCommand(cmd)
+
 
 if isMainModule:
   let controller = newController()
