@@ -1,5 +1,5 @@
 import src / controller
 
 if isMainModule:
-  let controller = newController()
+  let controller: Controller = newController()
   controller.startShell()
