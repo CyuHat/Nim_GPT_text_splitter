@@ -69,7 +69,9 @@ Then you will respond "Thank you TEXT memorized" and you will memorize the previ
 proc isValidExtension*(file_name: string): bool = false
 
 # should take a file name and check if this file is empty or not
-proc fileEmpty*(file_name: string): bool = false
+proc fileEmpty*(file_name: string): bool = 
+  let fileSize = getFileSize(file_name)
+  return fileSize == 0
 
 # should remove the first element (in the left) of the text sequence and send it to the clipboard returning the rest
 proc copy*(text_sequence: seq[string]): seq[string] = @[]
