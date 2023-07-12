@@ -38,25 +38,32 @@ proc main() =
       removeFile(outputFile)
 
     # Initial message for the Prompt
-    var final_text: string = """Work as a file loader, it means you need to store and recall the contents of the next chunks of text I will provide you.
+    # FIXME: Improve the prompt, Chat-GPT starts to stop loading and respond directly at some point
+    var 
+      final_text: seq[string] = @["""Work as a file loader, it means you need to store and recall the contents of the next chunks of text I will provide you.
 Each chunk start with -----[START x/TOTAL]----- and its end by -----[END x/TOTAL]-----, where x represents the current segment number and TOTAL is number representing the total number of segments to be loaded. 
 For each chunk loaded respond only with "[CHUNK x/TOTAL] Done!" and refrain from providing any explanations or additional comments on the text. 
 When the last chunk that end with "-----[END x/TOTAL]-----" where x is equal to TOTAL is loaded, respond "The whole document is loaded please give it a name". Then the user will write "name: TEXT" where TEXT is the name provided.
-Then you will respond "Thank you TEXT memorized" and you will memorize the previous chunck as part of a file of name "TEXT" which is the name previously loaded. Then the user can latter use the name to ask specific question about this file."""
-    
+Then you will respond "Thank you TEXT memorized" and you will memorize the previous chunck as part of a file of name "TEXT" which is the name previously loaded. Then the user can latter use the name to ask specific question about this file."""]
+
     let max_chunk = chunks.len
 
     # Create the chunck wrapper
     for i, chunk in chunks:
       var id: int = i + 1
-      final_text = final_text & "\n\n" & "-----[" & "START " & $id & "/" & $max_chunk & "]-----" & "\n\n" & chunk & "\n\n" & "-----[" & "END " & $id & "/" & $max_chunk & "]-----"
-    writeFile(outputFile, final_text)
+      final_text.add("\n\n" & "-----[" & "START " & $id & "/" & $max_chunk & "]-----" & "\n\n" & chunk & "\n\n" & "-----[" & "END " & $id & "/" & $max_chunk & "]-----")
+
+    # Open file and write into it
+    var final_file = open(outputFile, fmWrite)
+
+    for chunk in final_text:
+      final_file.writeLine(chunk)
+
+    final_file.close()
 
     echo "Created " & outputFile
   else:
     echo "Error: File not found."
-
-# Code to implement
 
 # should take a file name and say if it's file extension is correct (in this case ".txt" is correct) 
 proc isValidExtension*(file_name: string): bool = false
