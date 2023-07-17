@@ -66,7 +66,8 @@ Then you will respond "Thank you TEXT memorized" and you will memorize the previ
     echo "Error: File not found."
 
 # should take a file name and say if it's file extension is correct (in this case ".txt" is correct) 
-proc isValidExtension*(file_name: string): bool = false
+proc isValidExtension*(file_name: string): bool =
+  file_name.split(".")[1] == "txt"
 
 # should take a file name and check if this file is empty or not
 proc fileEmpty*(file_name: string): bool = 

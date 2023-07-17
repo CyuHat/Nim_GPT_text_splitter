@@ -6,8 +6,8 @@ discard """
 
 initializePlayground()
 
-doAssert fileEmpty("file.txt") == false
-doAssert fileEmpty("empty_file.txt") == true
+doAssert fileEmpty("tests/splitter/src/file.txt") == false
+doAssert fileEmpty("tests/splitter/src/empty_file.txt") == true
 
 # echo fileEmpty("file.txt")
 # echo fileEmpty("empty_file.txt")
