@@ -1,0 +1,4 @@
+megatest:processing: [0] tests/splitter/test_file_empty.nim
+megatest:processing: [1] tests/splitter/test_is_valid_extension.nim
+megatest:processing: [2] tests/splitter/test_playground.nim
+megatest:processing: [3] tests/splitter/test_split_text.nim

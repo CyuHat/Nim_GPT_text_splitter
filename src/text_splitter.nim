@@ -1,26 +1,66 @@
 import os, strutils, system
 
+proc word_exceed_chunk(word: string, currentChunk: var string, maxLength: int): bool =
+  var space = 1
+  if currentChunk.len == 0:
+    space = 0
+  return currentChunk.len + word.len + space > maxLength
+
+proc add_word_to_chunk(word: string, currentChunk: string): string =
+  var space: string = " " 
+  if currentChunk.len == 0:
+    space = ""
+  return currentChunk & space & word
+
+proc word_too_long(words: seq[string], maxLength: int): bool =
+  var res = false
+  for word in words:
+    if word.len > maxLength:
+      res = true
+      break
+  return res
+
+proc get_longest_word(words: seq[string]): string =
+  var longest = ""
+  for word in words:
+    if word.len > longest.len:
+      longest = word
+  return longest
+
 # Creating a function for text splitting
 proc splitText*(text: string, maxLength: int): seq[string] =
   var chunks: seq[string] = @[]
   var words = text.split(" ")
-  var currentChunk = ""
+  var currentChunk: string = ""
+
+  if word_too_long(words, maxLength):
+      echo "One or more words are too long. Try to increase the max length"
+      var longest_word = get_longest_word(words)
+      echo "Recommended minimal size: " & longest_word.len.intToStr
+      quit(QuitFailure)
 
   # Add words to the chunck if it doesn't exceed the maximum length defined beforehand
   # When the chunck si complet it add it to the chunck list, then it create a new chunck
   for word in words:
-    if currentChunk.len + word.len + 1 <= maxLength:
-      if currentChunk.len > 0:
-        currentChunk.add(" ")
-      currentChunk.add(word)
+    if not word_exceed_chunk(word, currentChunk, maxLength):
+      currentChunk = add_word_to_chunk(word, currentChunk)
     else:
+      # create a new chunk
       chunks.add(currentChunk)
       currentChunk = word
+
+      # if currentChunk.len > 0:
+        # currentChunk.add(" ")
+      # currentChunk.add(word)
+    # else:
+      # chunks.add(currentChunk)
+      # currentChunk = word
 
   if currentChunk.len > 0:
     chunks.add(currentChunk)
 
   return chunks
+
 
 # Main function
 proc main() =
@@ -79,4 +119,5 @@ proc copy*(text_sequence: seq[string]): seq[string] = @[]
 
 # Run the whole code
 if isMainModule:
-  main()
+  # main()
+  echo splitText("Hello World", 5)
