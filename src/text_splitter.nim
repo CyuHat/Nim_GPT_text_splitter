@@ -1,11 +1,13 @@
 import os, strutils, system
 
+# Check if the chunk of word exceed the max length
 proc word_exceed_chunk(word: string, currentChunk: var string, maxLength: int): bool =
   var space = 1
   if currentChunk.len == 0:
     space = 0
   return currentChunk.len + word.len + space > maxLength
 
+# 
 proc add_word_to_chunk(word: string, currentChunk: string): string =
   var space: string = " " 
   if currentChunk.len == 0:
@@ -78,7 +80,6 @@ proc main() =
       removeFile(outputFile)
 
     # Initial message for the Prompt
-    # FIXME: Improve the prompt, Chat-GPT starts to stop loading and respond directly at some point
     var 
       final_text: seq[string] = @["""Work as a file loader, it means you need to store and recall the contents of the next chunks of text I will provide you.
 Each chunk start with -----[START x/TOTAL]----- and its end by -----[END x/TOTAL]-----, where x represents the current segment number and TOTAL is number representing the total number of segments to be loaded. 
@@ -91,7 +92,7 @@ Then you will respond "Thank you TEXT memorized" and you will memorize the previ
     # Create the chunck wrapper
     for i, chunk in chunks:
       var id: int = i + 1
-      final_text.add("\n\n" & "-----[" & "START " & $id & "/" & $max_chunk & "]-----" & "\n\n" & chunk & "\n\n" & "-----[" & "END " & $id & "/" & $max_chunk & "]-----")
+      final_text.add("\n\n" & "-----[" & "START " & $id & "/" & $max_chunk & "]-----" & "\n\n" & chunk & "\n\n" & "-----[" & "END " & $id & "/" & $max_chunk & "]-----" & "\n" & "Do not respond!" & "\n")
 
     # Open file and write into it
     var final_file = open(outputFile, fmWrite)
